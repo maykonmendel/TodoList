@@ -1,21 +1,54 @@
 <template>
     <div id="task-component">
-        <form>
-            <input type="text" placeholder="Tarefa de hoje?"/>
-            <button type="submit">Adicionar</button>
+        <form @submit.prevent="addItem">            
+            <input type="text" placeholder="Tarefa de hoje?" v-model="tarefa"/>
+            <button type="submit" title="Adicionar">
+                <ph-plus size="16"/>     
+                Adicionar        
+            </button>            
         </form>
+        <item-task :lista="tarefas" :delete="deleteTask"/>
     </div>
 </template>
 
 <script>
 import Vue from "vue";
 export default Vue.component('task-component', {
-    
+    data() {
+        return {
+            tarefa: '',
+            tarefas: [],
+        }
+    },
+    methods: {
+        addItem() {
+            if (this.tarefa !== '') {
+                this.tarefas.push({
+                    text: this.tarefa,
+                    key: Date.now(),
+                });
+            } else {
+                alert("Digite uma tarefa...");
+                return;
+            }
+
+            this.tarefa = '';            
+        },
+
+        deleteTask(key) {
+            let filtro = this.tarefas.filter((item) => {
+                return (item.key !== key);
+            });
+
+            return this.tarefas = filtro;
+        },       
+    }
+
 })
 </script>
 
 <style scoped>
-    #task-component {
+#task-component {
         max-width: 700px;
         background: #202024;
         border-radius: 4px;
@@ -36,22 +69,33 @@ export default Vue.component('task-component', {
         border: 0;
         border-radius: 4px;
         margin-left: 10px;
-        padding: 0 15px;
+        padding: 8px 8px;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #f4f4f5;
     }
 
-    input {
-        flex: 1;
-        border: 2px solid #512bd4;
-        border-radius: 4px;
-        padding: 6px 10px;
-        font-size: 14px;
-        outline: none;
-        background: #3f3f46;
+    form button:hover {
+        background: rgb(112, 20, 232);
+        background: linear-gradient(90deg, rgba(112, 20, 232, 1) 9.4%, rgba(73, 49, 222, 1) 100%);
+        transition: 0.5s;
     }
 
-    
+    input {
+        flex: 1;
+        border: 2px solid #202024;
+        border-radius: 4px;
+        padding: 8px 15px;
+        font-size: 14px;
+        outline: none;
+        background: rgb(18, 18, 20);
+        color: rgb(255, 255, 255);
+        transition: border 0.2s ease 0s;
+    }
+
+    input:focus {
+        border-color: #512bd4;
+        transition: 0.5s;
+    }
 </style>
