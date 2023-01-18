@@ -8,6 +8,10 @@
             </button>            
         </form>
         <item-task :lista="tarefas" :delete="deleteTask"/>
+        <span v-show="tarefas.length > 0">
+            <ph-warning size="24" weight="fill"/>
+            Você tem <strong :class="{pend: pendente}">{{ tarefas.length }}</strong> tarefa(s) pendente(s).
+        </span>
     </div>
 </template>
 
@@ -18,6 +22,7 @@ export default Vue.component('task-component', {
         return {
             tarefa: '',
             tarefas: [],
+            pendente: false,
         }
     },
     methods: {
@@ -46,6 +51,7 @@ export default Vue.component('task-component', {
     watch: {
         tarefas() {
             localStorage.setItem('tasks', JSON.stringify(this.tarefas));
+            this.tarefas.length > 4 ? this.pendente = true : this.pendente = false;
         }
     },
     created() {
@@ -106,5 +112,25 @@ export default Vue.component('task-component', {
     input:focus {
         border-color: #512bd4;
         transition: 0.5s;
+    }
+
+    span {
+        background: #27272a;
+        border: 1px solid #f4f4f5;
+        border-radius: 4px;
+        color: #f4f5f5;
+        padding: .5rem;
+        display: flex; 
+        flex-direction: row;        
+        justify-content: center;
+        align-items: center;
+    }
+
+    span strong {
+        padding: 0 4px;
+    }
+
+    .pend {
+        color: #ff4b2b;
     }
 </style>

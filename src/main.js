@@ -1,6 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
-import { PhPlus, PhCheckSquareOffset, PhBookmarks } from 'phosphor-vue';
+import {
+    PhPlus,
+    PhCheckSquareOffset,
+    PhBookmarks,
+    PhWarning,
+} from 'phosphor-vue';
 import TaskComponent from './components/Task';
 import ItemTask from './components/Item';
 
@@ -10,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.component('ph-plus', PhPlus);
 Vue.component('ph-check-square-offset', PhCheckSquareOffset);
 Vue.component('ph-bookmarks', PhBookmarks);
+Vue.component('ph-warning', PhWarning);
 
 //Components
 Vue.component('task-component', TaskComponent);
