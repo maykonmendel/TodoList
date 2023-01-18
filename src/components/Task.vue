@@ -42,6 +42,15 @@ export default Vue.component('task-component', {
 
             return this.tarefas = filtro;
         },       
+    },
+    watch: {
+        tarefas() {
+            localStorage.setItem('tasks', JSON.stringify(this.tarefas));
+        }
+    },
+    created() {
+        const listTasks = localStorage.getItem('tasks');
+        this.tarefas = JSON.parse(listTasks) || [];
     }
 
 })

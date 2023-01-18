@@ -17,7 +17,7 @@ import Vue from "vue";
 export default Vue.component('item-task', {
     props: {
         lista: [],
-        delete: String,
+        delete: Function,
     },
     methods: {
         deleteItem(key) {
